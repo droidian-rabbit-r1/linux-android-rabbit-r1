@@ -425,6 +425,8 @@ int mtk_ccci_handle_port_list(int status, char *name)
 	unsigned long flags;
 	struct port_t *port = NULL;
 	struct sk_buff *skb = NULL;
+	unsigned long start = jiffies;
+	unsigned long timeout = msecs_to_jiffies(100);
 
 	channel = mtk_ccci_request_port(name);
 	if (channel < 0)
@@ -443,8 +445,14 @@ int mtk_ccci_handle_port_list(int status, char *name)
 		spin_unlock_irqrestore(&port->port_rx_list.lock, flags);
 		return ret;
 	}
-	while (!skb_queue_empty(&port->port_rx_list))
+	
+	while (!skb_queue_empty(&port->port_rx_list)){
+		if (time_after(jiffies, start + timeout)) {
+			pr_warn("recv_from_port_list timeout\n");
+			break;
+		}
 		recv_from_port_list(port);
+	}
 	return ret;
 }
 
