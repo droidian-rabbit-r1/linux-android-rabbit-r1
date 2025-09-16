@@ -46,23 +46,24 @@ jobs:
           
       - name: Move packages to out directory
         run: |
-          cp -rf ./prebuiltimages /
           mkdir /out
-          cp ../*.deb /out/
-          cp ../*.dsc /out/
-          cp ../*.tar.xz /out/
+          cp ../*.deb /out/ || true
+          cp ../*.dsc /out/ || true
+          cp ../*.tar.xz /out/ || true
           cd /out && export bootimagename=$(ls linux-bootimage-4.19-191*)
           dpkg-deb -R /out/$bootimagename /bootimage
           cd /bootimage
-          rm boot/dtbo.img-4.19-191-rabbit-r1
-          rm boot/recovery.img-4.19-191-rabbit-r1
-          cp -f /prebuiltimages/dtbo.img-4.19-191-rabbit-r1 boot/
-          cp -f /prebuiltimages/vbmeta.img-4.19-191-rabbit-r1 boot/
+          rm -f boot/dtbo.img-4.19-191-rabbit-r1 || true
+          rm -f boot/recovery.img-4.19-191-rabbit-r1 || true
+          cp -f ../out/arch/arm64/boot/dtbo.img boot/dtbo.img-4.19-191-rabbit-r1
+          cp -f ../out/arch/arm64/boot/vbmeta.img boot/vbmeta.img-4.19-191-rabbit-r1
+          cp -f ../out/arch/arm64/boot/recovery.img boot/recovery.img-4.19-191-rabbit-r1
           find . -type f -not -path "./DEBIAN/*" -exec md5sum {} + | sort -k 2 | sed 's/\.\/\(.*\)/\1/' > DEBIAN/md5sums
           cd /
           rm /out/$bootimagename
           dpkg-deb -b /bootimage /out/$bootimagename
           ls /out
+
           
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
