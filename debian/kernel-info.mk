@@ -11,7 +11,7 @@ VARIANT = android
 KERNEL_BASE_VERSION = 4.19.191
 
 # The kernel cmdline to use
-KERNEL_BOOTIMAGE_CMDLINE = bootopt=64S3,32N2,64N2 buildvariant=user droidian.lvm.prefer
+KERNEL_BOOTIMAGE_CMDLINE = bootopt=64S3,32N2,64N2 buildvariant=user datapart=/dev/disk/by-partlabel/userdata
 
 # Slug for the device vendor. This is going to be used in the KERNELRELASE
 # and package names.
@@ -21,7 +21,7 @@ DEVICE_VENDOR = rabbit
 DEVICE_MODEL = r1
 
 # Slug for the device platform. If unsure, keep this commented.
-#DEVICE_PLATFORM = platform
+DEVICE_PLATFORM = k69v1_64
 
 # Marketing-friendly full-name. This will be used inside package descriptions
 DEVICE_FULL_NAME = rabbit r1
@@ -56,7 +56,7 @@ KERNEL_IMAGE_WITH_DTB_OVERLAY = 1
 # Path to the DTB overlay.
 # If you leave this undefined, an attempt to find it automatically
 # will be made.
-#KERNEL_IMAGE_DTB_OVERLAY = arch/arm64/boot/dts/qcom/my_overlay.dtbo
+KERNEL_IMAGE_DTB_OVERLAY = arch/arm64/boot/dts/mediatek/k65v1_64.dtbo
 
 # Whether to include the DTB Overlay into the kernel image
 # Use 0 (no, default) or 1.
@@ -81,6 +81,9 @@ KERNEL_BOOTIMAGE_TAGS_OFFSET = 0x07808000
 
 # Specify boot image security patch level if needed
 KERNEL_BOOTIMAGE_PATCH_LEVEL = 2023-06
+
+# Specify boot image OS version if needed
+KERNEL_BOOTIMAGE_OS_VERSION = 12
 
 # Required for header version 2, ignore otherwise
 KERNEL_BOOTIMAGE_DTB_OFFSET = 0x07808000
@@ -130,12 +133,12 @@ FLASH_IS_LEGACY_DEVICE = 0
 # Device manufacturer. This must match the `ro.product.vendor.manufacturer`
 # Android property. If you don't want to specify this, leave it undefined,
 # FLASH_INFO_CPU will be checked instead.
-FLASH_INFO_MANUFACTURER = alps
+FLASH_INFO_MANUFACTURER = rabbit
 
 # Device model. This must match the `ro.product.vendor.model`
 # Android property. If you don't want to specify this, leave it undefined,
 # FLASH_INFO_CPU will be checked instead.
-FLASH_INFO_MODEL = k65v1_64
+FLASH_INFO_MODEL = rabbit r1
 
 # Device CPU. This will be grepped against /proc/cpuinfo to check if
 # we're running on the specific device. Note this is a last-resort
