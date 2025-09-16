@@ -56,7 +56,7 @@ KERNEL_IMAGE_WITH_DTB_OVERLAY = 1
 # Path to the DTB overlay.
 # If you leave this undefined, an attempt to find it automatically
 # will be made.
-KERNEL_IMAGE_DTB_OVERLAY = arch/arm64/boot/dts/mediatek/k65v1_64.dtbo
+KERNEL_IMAGE_DTB_OVERLAY = arch/arm64/boot/dts/mediatek/k65v1_64_bsp.dtbo
 
 # Whether to include the DTB Overlay into the kernel image
 # Use 0 (no, default) or 1.
